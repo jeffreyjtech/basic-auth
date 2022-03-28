@@ -26,7 +26,7 @@ const Users = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
 });
 
 // Signup Route -- create a new user
@@ -39,7 +39,7 @@ app.post('/signup', async (req, res) => {
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const record = await Users.create(req.body);
     res.status(200).json(record);
-  } catch (e) { res.status(403).send("Error Creating User"); }
+  } catch (e) { res.status(403).send('Error Creating User'); }
 });
 
 
@@ -77,16 +77,26 @@ app.post('/signin', async (req, res) => {
       res.status(200).json(user);
     }
     else {
-      throw new Error('Invalid User')
+      throw new Error('Invalid User');
     }
-  } catch (error) { res.status(403).send("Invalid Login"); }
+  } catch (error) { res.status(403).send('Invalid Login'); }
 
 });
+
+function start() {
+  app.listen(3000, () => console.log('server up'));
+}
+
+module.exports = {
+  start,
+  app,
+  sequelize,
+};
 
 // make sure our tables are created, start up the HTTP server.
 sequelize.sync()
   .then(() => {
-    app.listen(3000, () => console.log('server up'));
+    start();
   }).catch(e => {
     console.error('Could not start server', e.message);
   });
