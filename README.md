@@ -1,12 +1,11 @@
-<!--  This is a template repo -->
-# my project
+# Basic Auth
 
 An Express server that implements Basic Authentication, with signup and signin capabilities, using a Postgres database for storage.
 
-<!-- Insert links to deploy(s) here -->
 [Deployed API](https://jjtech-basic-auth.herokuapp.com/)
 
-<!-- Insert UML diagram here -->
+## UML Diagram
+
 ![UML Diagram](./assets/lab-6-uml.jpg)
 
 ## Installation
