@@ -3,12 +3,12 @@
 // const base64 = require('base-64');
 
 const express = require('express');
-const basicAuth = require('./basic-auth');
+const basicAuth = require('./middleware/basic-auth');
 
 const router = express.Router();
 
 // Import UsersModel
-const UsersModel = require('./user.model');
+const UsersModel = require('../user.model');
 
 // Signup Route -- create a new user
 // Two ways to test this route with httpie

@@ -4,7 +4,7 @@
 
 const base64 = require('base-64');
 
-const UsersModel = require('./user.model');
+const UsersModel = require('../user.model');
 
 async function basicAuth (request, response, next) {
   /*
