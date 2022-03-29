@@ -27,22 +27,32 @@ describe('Testing API authentication', () => {
     expect(response.body.id).toBeTruthy();
   });
 
+  test('Testing that we get if the new user\'s credentials are not provided', async () => {
+    let response = await request.post('/signup');
+
+    expect(response.status).toBe(400);
+  });
+
   test('Testing that we can sign in with the new user credentials', async () => {
     const authString = `${username}:${password}`;
-
     let encodedString = await base64.encode(authString);
-
     let response = await request.post('/signin').set('authorization', `Basic ${encodedString}`);
 
     expect(response.status).toBe(200);
     expect(response.body.username).toBe(username);
   });
 
-  test('Testing that we get 403\'d if invalid credentials are provided', async () => {
+  test('Testing that we get 403\'d if invalid username is provided', async () => {
     const authString = `potato:patato`;
-
     let encodedString = await base64.encode(authString);
+    let response = await request.post('/signin').set('authorization', `Basic ${encodedString}`);
 
+    expect(response.status).toBe(403);
+  });
+
+  test('Testing that we get 403\'d if invalid password is provided', async () => {
+    const authString = `${username}:patato`;
+    let encodedString = await base64.encode(authString);
     let response = await request.post('/signin').set('authorization', `Basic ${encodedString}`);
 
     expect(response.status).toBe(403);
