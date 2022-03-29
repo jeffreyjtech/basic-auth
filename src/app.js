@@ -2,7 +2,6 @@
 
 // 3rd Party Resources
 const express = require('express');
-const bcrypt = require('bcrypt');
 
 // Prepare the express app
 const app = express();
@@ -18,13 +17,14 @@ const authRouter = require('../auth/router');
 
 app.use(authRouter);
 
+// General purpose error catcher
 app.use((error, request, response, next) => {
   console.error(error);
   response.status(error.status || 500).send(error.message || 'Unknown server error');
 });
 
 function start() {
-  app.listen(3000, () => console.log('server up'));
+  app.listen(process.env.PORT || 3000, () => console.log('server up'));
 }
 
 module.exports = {
