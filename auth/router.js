@@ -33,4 +33,19 @@ router.post('/signin', basicAuth, async (request, response, next) => {
   response.status(200).json(request.user);
 });
 
+// --- Token Related routes ---
+const bearerAuth = require('./middleware/bearer-auth.js');
+const req = require('express/lib/request');
+
+router.get('/users', bearerAuth, async (request, response, next) => {
+  let users = await UsersModel.findAll({});
+
+  let payload = {
+    results: users,
+    token: request.user.token,
+  };
+
+  response.send(payload);
+});
+
 module.exports = router;
