@@ -2,20 +2,23 @@
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-// Assign the DB URL conditionally
-const DATABASE_URL = process.env.NODE_ENV === 'test' ?
-  'sqlite:memory' : // Either to sqlite:memory in testing mode
-  process.env.DATABASE_URL || 'postgresql://localhost:5432'; // Or process.env.DATABASE_URL in deployment
+// Assign the DB URL conditionally. In the local/test environment, we'll use sqlite:memory
+const DATABASE_URL = process.env.DATABASE_URL || 'sqlite:memory'; 
 
-const sequelize = new Sequelize(DATABASE_URL ,
-  { // this argument is required for Heroku Postgres to deploy properly
+// We'll use process.env.DATABASE_URL as a flag for including the Heroku options
+// These options will BREAK a locally run server
+const herokuOptions = process.env.DATABASE_URL ?
+  undefined :
+  { 
     dialectOptions: {
       ssl: {
         require: true,
         rejectUnauthorized: false,
       },
     },
-  });  
+  };
+
+const sequelize = new Sequelize(DATABASE_URL, herokuOptions);  
 
 module.exports = {
   sequelize,
