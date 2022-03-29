@@ -28,7 +28,7 @@ After installation, run `npm start`.
 
 ### Routes
 
-#### `/signin`
+#### `/signup`
 
 - POST : `/signup` : Creates a user account
   - Request body
