@@ -17,22 +17,15 @@ UsersModel.beforeCreate(async (user) => {
 });
 
 UsersModel.authenticateBasic = async function (username, password) {
-  /*
-  Now that we finally have username and password, let's see if it's valid
-  1. Find the user in the database by username
-  2. Compare the plaintext password we now have against the encrypted password in the db
-      - bcrypt does this by re-encrypting the plaintext password and comparing THAT
-  3. Either we're valid or we throw an error
-*/
-  let user = await this.findOne({ where: { username } });
 
-  if (!user) throw new Error;
-
-  let valid = await bcrypt.compare(password, user.password);
-
-  if (valid === false) throw new Error;
-
-  return user;
+  
+  let user = await this.findOne({ where: { username } }); // Ask our DB if a matching record exists, returns a falsy value if it doesn't
+  if (!user) throw new Error; // throw an error if user is falsy.
+  
+  let valid = await bcrypt.compare(password, user.password); // Ask bcrypt to validate the request's password against the record's password (hashed)
+  if (valid === false) throw new Error; // If it's not valid, throw an error
+  
+  return user; // Return a user since that's in our endpoint specs
 };
 
 module.exports = UsersModel;
