@@ -1,6 +1,6 @@
 'use strict';
 
-const { sequelize } = require('./auth/models');
+const { sequelize } = require('./auth/userModel');
 
 const { start } = require('./src/app.js');
 
@@ -9,6 +9,6 @@ sequelize.sync()
   .then(() => {
     console.log('Sequelize synced with DB');
     start();
-  }).catch(e => {
-    console.error('Could not start server', e.message);
+  }).catch(error => {
+    console.error('Could not start server:', error.message || 'unknown start error');
   });
