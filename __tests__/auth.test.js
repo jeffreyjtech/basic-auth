@@ -3,19 +3,48 @@
 const supertest = require('supertest');
 const { app } = require('../src/app');
 const request = supertest(app);
+
+const base64 = require('base-64');
+
 const { sequelize } = require('../src/database');
 
-beforeAll(() => sequelize.sync());
+beforeAll(async () => await sequelize.sync());
 
-afterAll(() => sequelize.drop());
+afterAll(async () => await sequelize.drop());
 
 describe('Testing API authentication', () => {
+  const username = 'Jeffrey';
+  const password = 'supersecret';
+
   test('Testing that we can create a user record', async () => {
     let response = await request.post('/signup').send({
-      username: 'Jeffrey',
-      password: 'supersecret',
+      username,
+      password,
     });
 
+    expect(response.status).toBe(201);
+    expect(response.body.username).toBe(username);
+    expect(response.body.id).toBeTruthy();
+  });
+
+  test('Testing that we can sign in with the new user credentials', async () => {
+    const authString = `${username}:${password}`;
+
+    let encodedString = await base64.encode(authString);
+
+    let response = await request.post('/signin').set('authorization', `Basic ${encodedString}`);
+
     expect(response.status).toBe(200);
+    expect(response.body.username).toBe(username);
+  });
+
+  test('Testing that we get 403\'d if invalid credentials are provided', async () => {
+    const authString = `potato:patato`;
+
+    let encodedString = await base64.encode(authString);
+
+    let response = await request.post('/signin').set('authorization', `Basic ${encodedString}`);
+
+    expect(response.status).toBe(403);
   });
 });
