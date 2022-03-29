@@ -32,6 +32,4 @@ UsersModel.authenticateBasic = async function (username, password) {
   }
 };
 
-module.exports = {
-  UsersModel,
-};
+module.exports = UsersModel;
