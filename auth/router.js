@@ -1,7 +1,5 @@
 'use strict';
 
-// const base64 = require('base-64');
-
 const express = require('express');
 const basicAuth = require('./middleware/basic-auth');
 
@@ -31,7 +29,7 @@ router.post('/signup', async (request, response, next) => {
 // test with httpie
 // http post :3000/signin -a john:foo
 router.post('/signin', basicAuth, async (request, response, next) => {
-
+  // If basicAuth succeeds, this middleware will execute
   response.status(200).json(request.user);
 });
 
