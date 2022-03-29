@@ -3,7 +3,7 @@
 const supertest = require('supertest');
 const { app } = require('../src/app');
 const request = supertest(app);
-const { sequelize } = require('../auth/models');
+const { sequelize } = require('../src/database');
 
 beforeAll(() => sequelize.sync());
 
