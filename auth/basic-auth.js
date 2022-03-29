@@ -26,9 +26,10 @@ async function basicAuth (request, response, next) {
     request.user = user;
     next();
   } catch (error) {
-    error.message = 'Invalid User';
-    error.status = 403;
-    next(error);
+    console.error(error);
+    let responseError = new Error('Invalid User');
+    responseError.status = 403;
+    next(responseError);
   }
 } 
 
