@@ -26,13 +26,13 @@ UsersModel.authenticateBasic = async function (username, password) {
 */
   let user = await this.findOne({ where: { username } });
 
-  if (user) {
-    let valid = await bcrypt.compare(password, user.password);
-    if (valid === false) throw new Error;
-    return user;
-  } else {
-    throw new Error;
-  }
+  if (!user) throw new Error;
+
+  let valid = await bcrypt.compare(password, user.password);
+
+  if (valid === false) throw new Error;
+
+  return user;
 };
 
 module.exports = UsersModel;
