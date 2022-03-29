@@ -47,4 +47,3 @@ After installation, run `npm start`.
   - Response
     - status `200`, and a JSON body with the signed-in user record
     - status `403` if either the username or password are invalid.
-
