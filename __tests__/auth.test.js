@@ -57,4 +57,19 @@ describe('Testing API authentication', () => {
 
     expect(response.status).toBe(403);
   });
+
+  // ---- Token-related tests ----
+  test('Should allow a user to authenticate a request using a token', async () => {
+    const authString = `${username}:${password}`;
+    let encodedString = await base64.encode(authString);
+    let response = await request.post('/signin').set('authorization', `Basic ${encodedString}`);
+
+    let token = response.body.token;
+
+    response = await request.get('/users').set('authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0].username).toBe(username);
+  });
 });
