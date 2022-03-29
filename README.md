@@ -42,7 +42,7 @@ After installation, run `npm start`.
 
 - POST : `/signin` : Logs into a user account
   - Headers
-    - Requires a header with base-64 encoded username and password.
+    - Requires an `authorization` header with base-64 encoded username and password.
       - `<username>:<password>` -> encode in base-64 -> `Basic <encodedAuthString>`
   - Response
     - status `200`, and a JSON body with the signed-in user record
