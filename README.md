@@ -1,20 +1,20 @@
 <!--  This is a template repo -->
 # my project
 
-<!-- Insert short overview here, 1 to 3 sentences -->
+An Express server that implements Basic Authentication, with signup and signin capabilities, using a Postgres database for storage.
 
 <!-- Insert links to deploy(s) here -->
-[Deployed API](https://my-server.myhost.scam)
+[Deployed API](https://jjtech-basic-auth.herokuapp.com/)
 
 <!-- Insert UML diagram here -->
-![UML Diagram](./assets/lab-uml.jpg)
+![UML Diagram](./assets/lab-6-uml.jpg)
 
 ## Installation
 
-1. Clone from this repo `git clone <GIT URL>`
-2. `cd` into `<REPO NAME>`
+1. Clone from this repo `git clone https://github.com/jeffreyjtech/basic-auth.git`.
+2. `cd` into `basic-auth`
 3. Run `npm install`
-4. Optionally, create an .env file with variable `PORT` to assign your preferred port number. The default `PORT` is `3000`.
+4. Optionally, create an .env file with variable `PORT` to run the API on your preferred port number. The default port is `3000`.
 
 ## Usage
 
@@ -24,35 +24,25 @@ After installation, run `npm start`.
 
 - Jeffrey Jenkins
 
-### Credits
-
-<!-- Credits and reference links go here -->
-
 ## Features / Routes
 
 ### Routes
 
-<!-- Route documentation goes here -->
+#### `/signup`
 
-#### `/routeA`
-
-<!-- Sample for an endpoint below. Refer to sample-README.md for more -->
-<!-- - GET : `/magikarp[/:id]`
-  - Parameters
-    - Optional: an `id` param will specify a single record to return.
+- POST : `/signup` : Creates a user account
+  - Request body
+    - Requires a JSON body with username and password properties
+      - `{ username: <your-username>, password: <your-password> }`
   - Response
-    - status `200`, and a JSON body which is an array of all records in the table if `id` **is not** present, or a single record if `id` **is** present.
-      - body: `{ // refer to schema }`
-    - status `500`, `id` param is invalid. -->
+    - status `201`, and a JSON body with the newly created user record.
+    - status `400` if user account could not be created.
 
-### Schemas
+#### `/signin`
 
-#### `modelA` schema:
-
-<!-- 
-```js
-{
-  name: "Golden boy", // Required
-  shiny: true // Required
-}
-``` -->
+- POST : `/signin` : Logs into a user account
+  - Headers
+    - Requires a Basic-type `authorization` header with base-64 encoded username and password.
+  - Response
+    - status `200`, and a JSON body with the signed-in user record
+    - status `403` if either the username or password are invalid.
