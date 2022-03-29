@@ -1,6 +1,6 @@
 'use strict';
 
-const { sequelize } = require('./auth/userModel');
+const { sequelize } = require('./auth/user-model');
 
 const { start } = require('./src/app.js');
 
