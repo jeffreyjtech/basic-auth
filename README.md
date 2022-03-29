@@ -11,8 +11,8 @@ An Express server that implements Basic Authentication, with signup and signin c
 
 ## Installation
 
-1. Clone from this repo `git clone <GIT URL>`
-2. `cd` into `<REPO NAME>`
+1. Clone from this repo `git clone https://github.com/jeffreyjtech/basic-auth.git`.
+2. `cd` into `basic-auth`
 3. Run `npm install`
 4. Optionally, create an .env file with variable `PORT` to assign your preferred port number. The default `PORT` is `3000`.
 
